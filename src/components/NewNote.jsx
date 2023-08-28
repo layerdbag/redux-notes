@@ -12,6 +12,8 @@ const NewNote = () => {
     dispatch(createNote(content));
   };
 
+  dispatch({ type: 'notes/createNote', payload: 'Redux Toolkit is awesome!' })
+
   return (
     <div>
       <form onSubmit={addNote}>
