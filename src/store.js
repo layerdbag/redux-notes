@@ -1,8 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import filterReducer from "./reducers/filterReducer";
-import noteReducer, { appendNote, setNotes } from "./reducers/noteReducer";
-
-
+import noteReducer from "./reducers/noteReducer";
 
 const store = configureStore({
   reducer : {
@@ -10,10 +8,5 @@ const store = configureStore({
   filter: filterReducer
   }
 })
-
-
-
-console.log(store.getState())
-
 
 export default store
