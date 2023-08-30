@@ -24,7 +24,7 @@ const noteSlice = createSlice({
     },
     setNotes(state, action) {
       return action.payload
-    }
+    },
   },
 })
 
@@ -42,6 +42,14 @@ export const createNote = content => {
   return async dispatch => {
     const newNote = await noteService.createNew(content)
     dispatch(appendNote(newNote))
+  }
+}
+
+export const updateNote = note => {
+  return async dispatch => {
+    const toggleImportance = { ...note, important: !note.important }
+    const returnedNote = await noteService.update(note.id, toggleImportance)
+    dispatch(toggleImportanceOf(returnedNote.id))
   }
 }
 
