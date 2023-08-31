@@ -1,17 +1,31 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { getNotes } from './requests'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { getNotes, createNote, updateNote } from './requests'
 
 const App = () => {
+  const queryClient = useQueryClient()
+
+  const newNoteMutation = useMutation(createNote, { 
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
+    },
+  })
+
   const addNote = async (event) => {
     event.preventDefault()
     const content = event.target.note.value
     event.target.note.value = ''
-    console.log(content)
+    newNoteMutation.mutate({ content, important: true })
   }
 
+  const updateNoteMutation = useMutation(updateNote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
+    },
+  })
+
   const toggleImportance = (note) => {
-    console.log('toggle importance of', note.id)
+    updateNoteMutation.mutate({ ...note, important: !note.important })
   }
 
   const result = useQuery({
@@ -33,7 +47,7 @@ const App = () => {
         <button type="submit">add</button>
       </form>
       {notes.map(note =>
-        <li key={note.id} onClick={() => toggleImportance(note.id)}>
+        <li key={note.id} onClick={() => toggleImportance(note)}>
           {note.content} 
           <strong> {note.important ? 'important' : ''}</strong>
         </li>
