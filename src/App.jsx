@@ -6,8 +6,9 @@ const App = () => {
   const queryClient = useQueryClient()
 
   const newNoteMutation = useMutation(createNote, { 
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] })
+    onSuccess: (newNote) => {
+      const notes = queryClient.getQueryData('notes')
+      queryClient.setQueryData('notes', notes.concat(newNote))
     },
   })
 
@@ -20,7 +21,7 @@ const App = () => {
 
   const updateNoteMutation = useMutation(updateNote, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] })
+      queryClient.invalidateQueries('notes')
     },
   })
 
@@ -28,9 +29,11 @@ const App = () => {
     updateNoteMutation.mutate({ ...note, important: !note.important })
   }
 
+
   const result = useQuery({
     queryKey: ['notes'],
-    queryFn: getNotes
+    queryFn: getNotes,
+    refetchOnWindowFocus: false
   })
   console.log(JSON.parse(JSON.stringify(result)))
 

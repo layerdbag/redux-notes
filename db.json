@@ -7,13 +7,33 @@
     },
     {
       "content": "useReduce with context is an alternative way for data management",
-      "important": false,
+      "important": true,
       "id": 2
     },
     {
       "content": "create a new note with react query",
-      "important": true,
+      "important": false,
       "id": 3
+    },
+    {
+      "content": "What a way to feel good!",
+      "important": true,
+      "id": 4
+    },
+    {
+      "content": "I like react ecosystem",
+      "important": true,
+      "id": 5
+    },
+    {
+      "content": "Just like this",
+      "important": false,
+      "id": 6
+    },
+    {
+      "content": "try again",
+      "important": false,
+      "id": 7
     }
   ]
 }
